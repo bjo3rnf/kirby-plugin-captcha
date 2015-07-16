@@ -1,12 +1,12 @@
 # CAPTCHA plugin
 
-A plugin for [Kirby CMS](http://getkirby.com) to secure forms with CAPTCHAs using [Securimage](http://www.phpcaptcha.org) 
+A plugin for [Kirby CMS](http://getkirby.com) to secure forms with CAPTCHAs using [Securimage](http://www.phpcaptcha.org)
 
 ## Installation
 
 Clone this repository into `/site/plugins`:
 
-`git clone https://github.com/bjo3rnf/kirby-plugin-captcha captcha`
+`git clone --recursive https://github.com/bjo3rnf/kirby-plugin-captcha captcha`
 
 ### Required config variables and their defaults
 
@@ -24,7 +24,7 @@ Clone this repository into `/site/plugins`:
 - captcha.text_color
 - captcha.line_color
 
-See [Securimage documentation](https://www.phpcaptcha.org/documentation/customizing-securimage/) for further information. 
+See [Securimage documentation](https://www.phpcaptcha.org/documentation/customizing-securimage/) for further information.
 
 ## How to use it
 
