@@ -34,7 +34,7 @@ Add a CAPTCHA field and image to your template:
 <label for="captcha">Captcha</label>
 <input type="text" id="captcha" name="captcha" size="10" maxlength="6">
 <img id="captchaimage" src="<?php echo url('captcha') ?>" alt="CAPTCHA Image">
-<a href="#" onclick="document.getElementById('captchaimg').src = '<?php echo url('captcha') ?>?' + Math.random(); return false">[ Different Image ]</a>
+<a href="#" onclick="document.getElementById('captchaimage').src = '<?php echo url('captcha') ?>?' + Math.random(); return false">[ Different Image ]</a>
 ```
 
 Validate the field in a controller as shown in [Bastian's Gist](https://gist.github.com/bastianallgeier/c396df7923848912393d):
