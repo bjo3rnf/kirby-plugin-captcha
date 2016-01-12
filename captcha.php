@@ -4,15 +4,19 @@
  * Captcha Plugin
  *
  * @author Björn Fromme <mail@bjo3rn.com>
- * @version 1.0.0
+ * @version 1.0.1
  */
 
 // Include Securimage
 require_once(dirname(__FILE__) . '/securimage/securimage.php');
 
 // Register captcha validator
-v::$validators['captcha'] = function($value) {
+v::$validators['captcha'] = function($value, $namespace = NULL) {
   $securimage = new Securimage();
+  if (NULL !== $namespace) {
+    $securimage->setNamespace($namespace);
+  }
+
   return $securimage->check($value);
 };
 

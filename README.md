@@ -89,6 +89,32 @@ return function($site, $pages, $page) {
 };
 ```
 
+For multiple CAPTCHAS on the same page make sure to set a namespace for each field by adding a query parameter to the 
+image url:
+
+```html
+...
+<img id="captchaimage1" src="<?php echo url('captcha?namespace=captcha1') ?>" alt="CAPTCHA Image 1">
+<input type="text" id="captcha1" name="captcha1" size="10" maxlength="6">
+...
+<img id="captchaimage2" src="<?php echo url('captcha?namespace=captcha2') ?>" alt="CAPTCHA Image 2">
+<input type="text" id="captcha2" name="captcha2" size="10" maxlength="6">
+...
+```
+
+and providing that namespace as the third parameter when registering the validator:
+
+```php
+...
+    $rules = array(
+      'name'    => array('required'),
+      'email'   => array('required', 'email'),
+      'captcha1' => array('required', 'captcha', 'captcha1'),
+      'captcha2' => array('required', 'captcha', 'captcha2'),
+    );
+...
+```
+
 ## Author
 
 Björn Fromme <mail@bjo3rn.com>
