@@ -17,7 +17,8 @@ v::$validators['captcha'] = function($value, $namespace = NULL) {
     $securimage->setNamespace($namespace);
   }
 
-  return $securimage->check($value);
+  //return $securimage->check($value);
+     if ($securimage->check($_POST['captcha']) == false) return true; else return false;
 };
 
 // Register route for captcha image generation
