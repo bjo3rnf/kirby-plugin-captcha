@@ -13,11 +13,15 @@ require_once(dirname(__FILE__) . '/securimage/securimage.php');
 // Register captcha validator
 v::$validators['captcha'] = function($value, $namespace = NULL) {
   $securimage = new Securimage();
-  if (NULL !== $namespace) {
+  
+  /* if (NULL !== $namespace) {
     $securimage->setNamespace($namespace);
-  }
-
-  return $securimage->check($value);
+  }*/
+    if ($securimage->check($value) == true) {
+      return true;
+    } else {
+      return false;
+    }
 };
 
 // Register route for captcha image generation
