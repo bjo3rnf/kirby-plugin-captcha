@@ -11,9 +11,9 @@
 require_once(dirname(__FILE__) . '/securimage/securimage.php');
 
 // Register captcha validator
-v::$validators['captcha'] = function($value, $namespace = NULL) {
+v::$validators['captcha'] = function($value, $namespace = 'captcha') {
   $securimage = new Securimage();
-  if (NULL !== $namespace) {
+  if ($namespace !== 'captcha') {
     $securimage->setNamespace($namespace);
   }
 

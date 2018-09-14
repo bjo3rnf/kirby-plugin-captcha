@@ -109,8 +109,8 @@ and providing that namespace as the third parameter when registering the validat
     $rules = array(
       'name'    => array('required'),
       'email'   => array('required', 'email'),
-      'captcha1' => array('required', 'captcha', 'captcha1'),
-      'captcha2' => array('required', 'captcha', 'captcha2'),
+      'captcha1' => array('required', 'captcha' => 'captcha1'),
+      'captcha2' => array('required', 'captcha' => 'captcha2'),
     );
 ...
 ```
