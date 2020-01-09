@@ -119,5 +119,4 @@ and providing that namespace as the third parameter when registering the validat
 
 ## Author
 
-Björn Fromme <mail@bjo3rn.com>
-Markus Schatzl <marsch@mailbox.org>
+Björn Fromme <mail@bjo3rn.com>, Markus Schatzl <marsch@mailbox.org>
