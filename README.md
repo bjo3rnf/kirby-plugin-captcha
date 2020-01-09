@@ -2,7 +2,7 @@
 
 **Requirement:** Kirby 3.0
 
-A plugin for [Kirby3 CMS](http://getkirby.com) to secure forms with CAPTCHAs using [Securimage](http://www.phpcaptcha.org)
+A plugin for the [Kirby CMS](http://getkirby.com) v3.x to secure forms with CAPTCHAs using [Securimage](http://www.phpcaptcha.org)
 
 ## Installation
 
@@ -39,57 +39,82 @@ Add a CAPTCHA field and image to your template:
 <a href="#" onclick="document.getElementById('captchaimage').src = '<?php echo url('captcha') ?>?' + Math.random(); return false">[ Different Image ]</a>
 ```
 
-Validate the field in a controller as shown in [Bastian's Gist](https://gist.github.com/bastianallgeier/c396df7923848912393d):
+Validate the field in a controller as shown in the [Email form recipe](https://getkirby.com/docs/cookbook/forms/basic-contact-form#the-contact-form-controller) from the Kirby cookbook:
 
 ```php
 <?php
+return function($kirby, $pages, $page) {
 
-return function($site, $pages, $page) {
+    $alert = null;
 
-  $alert = null;
+    if($kirby->request()->is('POST') && get('submit')) {
 
-  $data = array(
-    'name'     => get('name'),
-    'email'    => get('email'),
-    'captcha'  => get('captcha'),
-  );
+        // check the honeypot
+        if(empty(get('website')) === false) {
+            go($page->url());
+            exit;
+        }
 
-  if (get('submit')) {
+        $data = [
+            'name'  => get('name'),
+            'email' => get('email'),
+            'text'  => get('text'),
+            'captcha'  => get('captcha'),
+        ];
 
-    $rules = array(
-      'name'    => array('required'),
-      'email'   => array('required', 'email'),
-      'captcha' => array('required', 'captcha'),
-    );
+        $rules = [
+            'name'  => ['required', 'min' => 3],
+            'email' => ['required', 'email'],
+            'text'  => ['required', 'min' => 3, 'max' => 3000],
+            'captcha' => ['required', 'captcha'],
+        ];
 
-    $messages = array(
-      'name'    => 'Please enter your name',
-      'email'   => 'Please enter a valid email address',
-      'captcha' => 'The security code entered was incorrect',
-    );
+        $messages = [
+            'name'  => 'Please enter a valid name',
+            'email' => 'Please enter a valid email address',
+            'text'  => 'Please enter a text between 3 and 3000 characters',
+            'captcha' => 'The security code entered was incorrect',
+        ];
 
-    if ($invalid = invalid($data, $rules, $messages)) {
-      $alert = $invalid;
-    } else {
-      $body  = snippet('contactmail', $data, true);
-      $email = email(array(
-        'to'      => c::get('contactform.to'),
-        'from'    => c::get('contactform.from'),
-        'subject' => c::get('contactform.subject'),
-        'body'    => $body
-      ));
+        // some of the data is invalid
+        if($invalid = invalid($data, $rules, $messages)) {
+            $alert = $invalid;
 
-      if ($email->send()) {
-        go('thankyou');
-      } else {
-        $alert = array($email->error());
-      }
+            // the data is fine, let's send the email
+        } else {
+            try {
+                $kirby->email([
+                    'template' => 'email',
+                    'from'     => 'yourcontactform@yourcompany.com',
+                    'replyTo'  => $data['email'],
+                    'to'       => 'you@yourcompany.com',
+                    'subject'  => esc($data['name']) . ' sent you a message from your contact form',
+                    'data'     => [
+                        'text'   => esc($data['text']),
+                        'sender' => esc($data['name'])
+                    ]
+                ]);
+
+            } catch (Exception $error) {
+                $alert['error'] = "The form could not be sent";
+            }
+
+            // no exception occured, let's send a success message
+            if (empty($alert) === true) {
+                $success = 'Your message has been sent, thank you. We will get back to you soon!';
+                $data = [];
+            }
+        }
     }
-  }
 
-  return compact('alert', 'data');
+    return [
+        'alert'   => $alert,
+        'data'    => $data ?? false,
+        'success' => $success ?? false
+    ];
 };
 ```
+
 
 For multiple CAPTCHAS on the same page make sure to set a namespace for each field by adding a query parameter to the 
 image url:
