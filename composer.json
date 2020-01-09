@@ -1,0 +1,20 @@
+{
+    "name": "marsch/kirby3-captcha",
+    "description": "Captcha Plugin for Kirby3",
+    "type": "kirby-plugin",
+    "license": "MIT",
+    "version": "1.1.1",
+    "authors": [
+	{
+            "name": "Bjoern Fromme",
+            "email": "mail@bjo3rn.com"
+        },
+	{
+            "name": "Markus Schatzl",
+            "email": "marsch@mailbox.org"
+        }
+    ],
+    "require": {
+        "getkirby/composer-installer": "^1.1"
+    }
+}
