@@ -1,26 +1,22 @@
 <?php
 
-/**
- * Captcha for KIRBY3 Plugin
- *
- * @author Björn Fromme <mail@bjo3rn.com>
- * @author Markus Schatzl <marsch@mailbox.org>
- * @version 1.1.0
- */
-
+// Auto-load the securimage library
 load([
       'securimage' => 'securimage/securimage.php'
 ], __DIR__);
 
-v::$validators['captcha'] = function($value, $namespace = 'captcha') {         
-  $securimage = new Securimage();                                                
-  if ($namespace !== 'captcha') {                                                
-    $securimage->setNamespace($namespace);                                       
-  }                                                                            
-  return $securimage->check($value);                                             
-}; 
-
-Kirby::plugin('marsch/kirby3-captcha', [
+Kirby::plugin('marsch/kirby3-captcha', [ 
+  // Set up a proper validator for the text field content	
+  'validators' => [
+    'captcha' => function($value, $namespace = 'captcha') {
+      $securimage = new Securimage();
+      if ($namespace !== 'captcha') {
+        $securimage->setNamespace($namespace);
+      }
+      return $securimage->check($value);
+    }
+  ],
+  // Create a virtual URL for the generated image
   'routes' => function($kirby) { 
     return [
       [ 
@@ -33,7 +29,6 @@ Kirby::plugin('marsch/kirby3-captcha', [
           $img->perturbation   = c::get('captcha.perturbation', .75);
 	  $img->num_lines      = c::get('captcha.num_lines', 8);
           $img->charset        = c::get('captcha.charset', 'ABCDEFGHJKMNPQRSTVWXYZ');
-
 
           if (c::get('captcha.ttf_file')) {
             $img->ttf_file = c::get('captcha.ttf_file');

@@ -3,7 +3,7 @@
     "description": "Captcha Plugin for Kirby3",
     "type": "kirby-plugin",
     "license": "MIT",
-    "version": "1.1.0",
+    "version": "1.1.1",
     "authors": [
 	{
             "name": "Bjoern Fromme",
