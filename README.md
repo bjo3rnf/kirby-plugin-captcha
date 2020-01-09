@@ -1,12 +1,14 @@
-# CAPTCHA plugin
+# Kirby3 captcha
 
-A plugin for [Kirby CMS](http://getkirby.com) to secure forms with CAPTCHAs using [Securimage](http://www.phpcaptcha.org)
+**Requirement:** Kirby 3.0
+
+A plugin for [Kirby3 CMS](http://getkirby.com) to secure forms with CAPTCHAs using [Securimage](http://www.phpcaptcha.org)
 
 ## Installation
 
 Clone this repository into `/site/plugins`:
 
-`git clone --recursive https://github.com/bjo3rnf/kirby-plugin-captcha captcha`
+`git clone --recursive https://github.com/marsch-/kirby3-captcha captcha`
 
 ### Required config variables and their defaults
 
@@ -118,3 +120,4 @@ and providing that namespace as the third parameter when registering the validat
 ## Author
 
 Björn Fromme <mail@bjo3rn.com>
+Markus Schatzl <marsch@mailbox.org>
